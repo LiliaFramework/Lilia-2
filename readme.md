@@ -65,6 +65,9 @@ client:Notify("You have died, lol")
 
 ### Networking
 **Use the bloody `net.` library**
+```lua
+lia.character.Create
+```
 
 ### Optimization
 Try to optimize where you can.
