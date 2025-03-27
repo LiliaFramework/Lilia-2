@@ -5,7 +5,7 @@ lia.exampleFunction.Test( "test" )
 lia.exampleFunction.Test("test")
 ```
 
-**Do not** use brackets for if statements
+**Do not** use brackets for if statements. ( Except when you need them, I can't explain it )
 ```lua
 local test = 2
 if test == 2 then
@@ -28,7 +28,18 @@ local IsDead = false
 ```
 
 ### For operators
-use `! (not), != (not equal to), and, or`
+use `not, != (not equal to), and, or`
+
+```lua
+if not client:IsAlive() then
+
+end
+```
+```lua
+if ( client:Health() < 50 and client:Health() > 45 and client:Health() != 49 ) or not client:Alive() then
+
+end
+```
 
 ### Spacing
 Space out when you start to use different variables or smth, idk how to explain it, just make it pretty and readable
