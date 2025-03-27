@@ -58,6 +58,24 @@ client:Notify("You have died, lol")
 ### Networking
 **Use the bloody `net.` library**
 
+### Optimization
+Try to optimize where you can.
+
+Some global variables:
+```lua
+color_white =       Color( 255, 255, 255, 255 )
+color_black =       Color( 0, 0, 0, 255 )
+color_transparent = Color( 255, 255, 255, 0 )
+
+vector_origin =     Vector( 0, 0, 0 )
+vector_up =         Vector( 0, 0, 1 )
+angle_zero =        Angle( 0, 0, 0 )
+```
+
+Creating a [Color](https://wiki.facepunch.com/gmod/Global.Color) is expensive in rendering hooks. It is better to store the color in a variable.
+
+[A few others](https://wiki.facepunch.com/gmod/Global_Variables)
+
 ## TODO
 - Character System ( Creating, Loading, Deleting )
 - Inventory System ( Weight Based )
