@@ -13,6 +13,14 @@ if test == 2 then
 end
 ```
 
+Please put spacing between operators
+```lua
+local str1 = "Hello "
+local str2 = "World"
+
+print(str1 .. str2)
+```
+
 ### For functions
 ```lua
 Player:IsClass()
