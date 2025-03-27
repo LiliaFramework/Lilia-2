@@ -72,7 +72,10 @@ vector_up =         Vector( 0, 0, 1 )
 angle_zero =        Angle( 0, 0, 0 )
 ```
 
-Creating a [Color](https://wiki.facepunch.com/gmod/Global.Color) is expensive in rendering hooks. It is better to store the color in a variable.
+* Creating a [Color](https://wiki.facepunch.com/gmod/Global.Color) is expensive in rendering hooks or frequent operations. It is better to store the color in a variable.
+* Creating a [Vector](https://wiki.facepunch.com/gmod/Global.Vector) is expensive in rendering hooks or frequent operations. It is better to store the color in a variable.
+* Creating an [Angle](https://wiki.facepunch.com/gmod/Global.Angle) is expensive in rendering hooks or frequent operations. It is better to store the color in a variable.
+
 
 [A few others](https://wiki.facepunch.com/gmod/Global_Variables)
 
