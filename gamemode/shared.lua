@@ -1,3 +1,4 @@
+local lastSysTime = SysTime()
 DeriveGamemode("sandbox")
 
 GM.Name = "Lilia"
@@ -119,7 +120,6 @@ function GM:Initialize()
 	-- Include files
 end
 
-local lastSysTime = SysTime()
 function GM:OnReloaded()
 	lia.IncludeDir("core", true)
 
@@ -127,5 +127,4 @@ function GM:OnReloaded()
 	local deltaTime = currentSysTime - lastSysTime
 
 	lia.print("Reloaded gamemode in " .. string.format("%.2f", deltaTime) .. " seconds")
-	lastSysTime = currentSysTime
 end

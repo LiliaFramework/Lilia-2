@@ -25,5 +25,3 @@ hook.Add("OnScreenSizeChanged", "CachedScreenScale", function(oldWidth, oldHeigh
         height = {},
     }
 end)
-
-lia.print("HELL YEAH NDADADs")
