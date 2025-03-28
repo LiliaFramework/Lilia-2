@@ -1,36 +1,13 @@
-local file = file
-local SERVER = SERVER
-local ipairs = ipairs
-local include = include
-local AddCSLuaFile = AddCSLuaFile
+local materialsCache = {}
+function lia.util.GetMaterial(sMaterialPath, sParams)
+    if not sMaterialPath then return end
 
-function lia.util.Include(sName, sRealm)
-    if not sName then return lia.print("Include: No file name specified.") end
-
-    if (sRealm == "server" or sName:find("sv_")) and SERVER then
-            return include(sName)
-    elseif sRealm == "shared" or sName:find("sh_") then
-        if SERVER then
-            AddCSLuaFile(sName)
-        end
-        return include(sName)
-    elseif sRealm == "client" or sName:find("cl_") then
-        if SERVER then
-            AddCSLuaFile(sName)
-        else
-            return include(sName)
-        end
+    if materialsCache[sMaterialPath] then
+        return materialsCache[sMaterialPath]
     end
-end
 
-function lia.util.IncludeDir(sDir)
-    local sBase = "lilia"
+    local material = Material(sMaterialPath, sParams or "")
+    materialsCache[sMaterialPath] = material
 
-    -- TODO: Schema Support
-
-    sBase = sBase .. "/gamemode/"
-
-    for _, v in ipairs(file.Find(sBase .. sDir .. "/*.lua", "LUA")) do
-        lia.util.Include(sBase .. sDir .. "/" .. v)
-    end
+    return material
 end

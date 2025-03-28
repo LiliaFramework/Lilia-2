@@ -21,3 +21,11 @@ end
 function GM:DrawDeathNotice()
     return false
 end
+
+function GM:HUDPaint()
+    local client = LocalPlayer()
+    local hookResult = hook.Run("ShouldDrawHUD", client)
+    if hookResult == false then return end
+
+    lia.util.DrawBlur2D(0, 0)
+end

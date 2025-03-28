@@ -1,1 +1,1 @@
--- TODO, Character Library
+lia.character = lia.character or {}
