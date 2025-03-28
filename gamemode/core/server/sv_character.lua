@@ -15,7 +15,7 @@ function lia.character.New( data, id, steamID )
 	return character
 end
 
-function lia.character:Save( charID, data )
+function lia.character.Save( charID, data )
 	if not charID or not data then return end
 
 	local character = lia.character.loaded[ charID ]
@@ -30,7 +30,7 @@ function lia.character:Save( charID, data )
 	hook.Run( "CharacterSaved", character, data )
 end
 
-function lia.character:Remove( charID )
+function lia.character.Remove( charID )
 	if not charID then return end
 
 	local character = lia.character.loaded[ charID ]
@@ -42,7 +42,7 @@ function lia.character:Remove( charID )
 	lia.db.query( "DELETE FROM lia_characters WHERE id = " .. charID .. ";", function() end )
 end
 
-function lia.character:Load( charID, data )
+function lia.character.Load( charID, data )
 	if not charID or not data then return end
 
 	local character = lia.character.loaded[ charID ]
