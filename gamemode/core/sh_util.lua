@@ -26,7 +26,7 @@ end
 function lia.util.IncludeDir(sDir)
     local sBase = "lilia"
 
-    -- We'll do the schema check later
+    -- TODO: Schema Support
 
     sBase = sBase .. "/gamemode/"
 
