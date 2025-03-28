@@ -1,4 +1,9 @@
-## Syntax
+# This is the Official Repository for Lilia 2.0
+
+This is heavily WIP. Do not try to use.
+
+# Code Syntax
+
 You **can** put spaces between brackets, **if you'd like to** (both are fine)
 ```lua
 lia.exampleFunction.Test( "test" )
