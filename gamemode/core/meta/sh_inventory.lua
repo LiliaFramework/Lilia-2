@@ -12,6 +12,7 @@ function inventoryMeta:__tostring()
 end
 
 function inventoryMeta:GetOwner()
+	return self.owner
 end
 
 function inventoryMeta:GetItems()
