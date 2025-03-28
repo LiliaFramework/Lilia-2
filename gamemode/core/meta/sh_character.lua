@@ -12,6 +12,7 @@ function characterMeta:__tostring()
 end
 
 function characterMeta:GetPlayer()
+	return self.player
 end
 
 lia.meta.character = characterMeta
