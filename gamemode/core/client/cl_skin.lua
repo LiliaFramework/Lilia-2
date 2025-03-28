@@ -24,7 +24,7 @@ function SKIN:PaintFrame(panel)
         panel.LaidOut = true
     end
 
-    lia.util.drawBlur(panel, 10)
+    lia.util.DrawBlur(panel, 10)
     surface.SetDrawColor(45, 45, 45, 200)
     surface.DrawRect(0, 0, panel:GetWide(), panel:GetTall())
 end
