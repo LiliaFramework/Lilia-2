@@ -66,20 +66,20 @@ function lia.Include(sName, sRealm)
 	if sName == nil then return lia.print( "[Include] ", lia.color.Get( "red" ), "File name is missing" ) end
 
 	if ( realm == "server" or sName:find( "sv_" ) ) and SERVER then
-        return include(sName)
-    elseif realm == "shared" or sName:find( "shared.lua" ) or sName:find( "sh_" ) then
-        if SERVER then
-            AddCSLuaFile(sName)
-        end
+		return include(sName)
+	elseif realm == "shared" or sName:find( "shared.lua" ) or sName:find( "sh_" ) then
+		if SERVER then
+			AddCSLuaFile(sName)
+		end
 
-        return include(sName)
-    elseif realm == "client" or sName:find("cl_") then
-        if SERVER then
-            AddCSLuaFile(sName)
-        else
-            return include(sName)
-        end
-    end
+		return include(sName)
+	elseif realm == "client" or sName:find("cl_") then
+		if SERVER then
+			AddCSLuaFile(sName)
+		else
+			return include(sName)
+		end
+	end
 end
 
 local function IncludeSubDirectories(sDir)
@@ -87,27 +87,19 @@ local function IncludeSubDirectories(sDir)
 
 	while #directories > 0 do
 		local directory = table.remove(directories, 1)
-		local newFiles, subDirectories = file.Find(sDir .. "/" .. directory .. "/*.lua", "LUA")
-
-		for _, fileName in ipairs(newFiles) do
-			lia.Include(sDir .. directory .. "/" .. fileName)
-		end
-
-		for _, subdirectory in ipairs(subDirectories) do
-			lia.IncludeDir(sDir .. "/" .. directory .. "/" .. subdirectory, false)
-		end
+		lia.IncludeDir(sDir .. directory, true, true)
 	end
 end
 
-function lia.IncludeDir(sDir, bIncludeSubDirs)
+function lia.IncludeDir(sDir, bIgnoreBase, bIncludeSubDirs)
 	local sBase = "lilia"
+	sBase = sBase .. "/gamemode/"
 
 	-- TODO: Schema Support
 
-	sBase = sBase .. "/gamemode/"
-	local files, directories = file.Find(sBase .. sDir .. "/*", "LUA")
-	PrintTable(files)
-	PrintTable(directories)
+	if bIgnoreBase then sBase = "" end
+
+	local files = select(1, file.Find(sBase .. sDir .. "/*.lua", "LUA"))
 	for _, v in ipairs(files) do
 		lia.Include(sBase .. sDir .. "/" .. v)
 	end
@@ -117,7 +109,7 @@ function lia.IncludeDir(sDir, bIncludeSubDirs)
 	end
 end
 
-lia.IncludeDir("core", true)
+lia.IncludeDir("core", false, true)
 
 function GM:Initialize()
 	-- TODO
