@@ -11,3 +11,13 @@ function lia.util.GetMaterial(sMaterialPath, sParams)
 
     return material
 end
+
+function lia.util.FindPlayer(identifier)
+    for k, v in player.Iterator() do
+        if identifier == v:SteamID() or identifier == v:SteamID64() or identifier:find(v:Name()) then
+            return v
+        end
+    end
+
+    return nil
+end
