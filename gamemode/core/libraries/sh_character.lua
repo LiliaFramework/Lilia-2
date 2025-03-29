@@ -37,12 +37,12 @@ function lia.character.RegisterVariable( sName, tVarData )
 				net.WriteUInt( self.id, 32 )
 				net.WriteString( sName )
 				net.WriteType( value )
-			net.Send(receivers)
+			net.Send( receivers or)
 		end
 	end
 
 	funcName = "Get" .. string.sub(sName, 1, 1):upper() .. string.sub(sName, 2)
-	characterMeta[funcName] = function(self)
-		return self.vars[sName]
+	characterMeta[ funcName ] = function(self)
+		return self.vars[ sName ]
 	end
 end
