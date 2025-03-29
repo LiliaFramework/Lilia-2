@@ -9,3 +9,10 @@ end )
 net.Receive( "lia.character.Load", function()
 
 end )
+
+net.Receive( "lia.option.Set", function()
+	local sName = net.ReadString()
+	local sValue = net.ReadType()
+
+	lia.option.Set( sName, sValue )
+end )

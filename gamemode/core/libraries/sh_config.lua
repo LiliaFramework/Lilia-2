@@ -28,17 +28,4 @@ function lia.config.Get(sName, fallback)
 	return config.default or fallback or config.default
 end
 
-function lia.config.Set(sName, sValue)
-	if not sName or not sValue then return end
-
-	local config = lia.config.stored[sName]
-	if not config then
-		return lia.error("Config " .. sName .. " does not exist!")
-	end
-
-	lia.config.values[sName] = sValue
-
-	if config.OnSet then
-		config:OnSet(sValue)
-	end
-end
+hook.Run( "OnConfigLoaded" )
