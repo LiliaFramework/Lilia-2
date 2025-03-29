@@ -44,7 +44,7 @@ local function DatabaseQuery()
                     if v.default ~= nil then colDef = colDef .. " DEFAULT '" .. tostring(v.default) .. "'" end
 
                     local alter = ("ALTER TABLE lia_characters ADD COLUMN %s"):format(colDef)
-                    lia.database.query(alter, function() MsgC(Color(83, 143, 239), "[Lilia] ", Color(0, 255, 0), "[Database] ", Color(255, 255, 255), string.format("Added missing column `%s`.\n", v.field)) end)
+                    lia.database.query(alter, function() lia.print("[Database] ", lia.color.green, string.format("Added missing column `%s`.\n", v.field)) end)
                 end
             end
         end)
