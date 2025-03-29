@@ -22,9 +22,6 @@ function GM:DrawDeathNotice()
     return false
 end
 
-function GM:InitPostEntity()
-    lia.localClient = LocalPlayer()
-end
 
 local elementsToHide = {
     ["CHudHealth"] = true,

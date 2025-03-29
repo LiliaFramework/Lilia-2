@@ -16,3 +16,10 @@ net.Receive( "lia.option.Set", function()
 
 	lia.option.Set( sName, sValue )
 end )
+
+net.Receive( "lia.config.Set", function()
+	local sName = net.ReadString()
+	local sValue = net.ReadType()
+
+	lia.config.values[ sName ] = sValue
+end )
