@@ -1,60 +1,68 @@
 file.CreateDir("lilia")
 lia.data = lia.data or {}
 lia.data.stored = lia.data.stored or {}
-if SERVER then
-    function lia.data.Set(key, value, global, ignoreMap)
-        local folder = SCHEMA and SCHEMA.folder or engine.ActiveGamemode()
-        local path = "lilia/" .. (global and "" or folder .. "/") .. (ignoreMap and "" or game.GetMap() .. "/")
-        if not global then file.CreateDir("lilia/" .. folder .. "/") end
-        file.CreateDir(path)
-        file.Write(path .. key .. ".txt", pon.encode({value}))
-        lia.data.stored[key] = value
-        return path
-    end
 
-
-    function lia.data.Delete(key, global, ignoreMap)
-        local folder = SCHEMA and SCHEMA.folder or engine.ActiveGamemode()
-        local path = "lilia/" .. (global and "" or folder .. "/") .. (ignoreMap and "" or game.GetMap() .. "/")
-        local contents = file.Read(path .. key .. ".txt", "DATA")
-        if contents and contents ~= "" then
-            file.Delete(path .. key .. ".txt")
-            lia.data.stored[key] = nil
-            return true
-        else
-            return false
-        end
-    end
-
-    timer.Create("liaSaveData", 600, 0, function()
-        hook.Run("SaveData")
-        hook.Run("PersistenceSave")
-    end)
+local function GetDataPath(bIgnoreMap)
+    return "lilia/" .. SCHEMA.folder .. "/" .. (bIgnoreMap and "" or game.GetMap() .. "/")
 end
 
-function lia.data.Get(key, default, global, ignoreMap, refresh)
-    if not refresh then
-        local stored = lia.data.stored[key]
-        if stored ~= nil then return stored end
+function lia.data.Set(sKey, value, bIgnoreMap)
+    local path = GetDataPath(bIgnoreMap)
+
+    file.CreateDir(path)
+
+    file.Write(path .. sKey .. ".txt", util.TableToJSON({value}))
+
+    lia.data.stored[sKey] = value
+
+    return path
+end
+
+function lia.data.Get(sKey, default, bIgnoreMap, bRefresh)
+    if not bRefresh then
+        local stored = lia.data.stored[sKey]
+
+        if stored != nil then
+            return stored
+        end
     end
 
-    local folder = SCHEMA and SCHEMA.folder or engine.ActiveGamemode()
-    local path = "lilia/" .. (global and "" or folder .. "/") .. (ignoreMap and "" or game.GetMap() .. "/")
-    local contents = file.Read(path .. key .. ".txt", "DATA")
-    if contents and contents ~= "" then
-        local status, decoded = pcall(pon.decode, contents)
-        if status and decoded then
+    local path = GetDataPath( bIgnoreMap)
+
+    local contents = file.Read(path .. sKey .. ".txt", "DATA")
+
+    if contents and contents != "" then
+        local stat, decoded = pcall(util.JSONToTable, contents)
+
+        if stat and decoded then
             local value = decoded[1]
-            lia.data.stored[key] = value
-            if value ~= nil then
+
+            if value != nil then
                 return value
-            else
-                return default
             end
-        else
-            return default
         end
-    else
-        return default
     end
+
+    return default
+end
+
+function lia.data.Remove(sKey, bIgnoreMap)
+    local path = GetDataPath(bIgnoreMap)
+
+    local contents = file.Read(path .. sKey .. ".txt", "DATA")
+
+    if contents and contents != "" then
+        file.Delete(path .. sKey .. ".txt")
+        lia.data.stored[sKey] = nil
+
+        return true
+    end
+
+    return false
+end
+
+if SERVER then
+    timer.Create("liaSaveData", 600, 0, function()
+        hook.Run("SaveData")
+    end)
 end
