@@ -9,9 +9,34 @@ widgets.PlayerTick = nil
 hook.Remove( "PlayerTick", "TickWidgets" )
 
 lia = lia or {
-	util = {},
-	meta = {},
-	color = {},
+	util = util or {},
+	meta = meta or {},
+	color = color or {},
+}
+
+lia.type = lia.type or {
+    [2] = "string",
+    [4] = "text",
+    [8] = "number",
+    [16] = "player",
+    [32] = "steamid",
+    [64] = "character",
+    [128] = "bool",
+    [1024] = "color",
+    [2048] = "vector",
+
+    string = 2,
+    text = 4,
+    number = 8,
+    player = 16,
+    steamid = 32,
+    character = 64,
+    bool = 128,
+    color = 1024,
+    vector = 2048,
+
+    optional = 256,
+    array = 512
 }
 
 lia.color.consolePrefix = Color( 83, 143, 239 )
@@ -60,7 +85,7 @@ function lia.print( ... )
 	local packed = { ... }
 	packed[ #packed + 1 ] = "\n"
 
-	MsgC( SERVER and lia.color.consoleServerMsg or lia.color.consoleClientMsg, "[Lilia] ", unpack( packed ) )
+	MsgC(lia.color.consolePrefix, "[Lilia] ", SERVER and lia.color.consoleServerMsg or lia.color.consoleClientMsg, unpack( packed ) )
 end
 
 function lia.error( ... )

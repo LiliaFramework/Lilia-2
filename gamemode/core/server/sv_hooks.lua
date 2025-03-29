@@ -13,14 +13,18 @@ function GM:PlayerSpray()
     return false
 end
 
-function GM:OnMySQLOOConnected()
-    hook.Run("RegisterPreparedStatements")
-    MYSQLOO_PREPARED = true
+function GM:DatabaseConnected()
+    -- Create the SQL tables if they do not exist.
+    lia.database.LoadTables()
+
+    lia.print(lia.color.green, "Database Connected. (\"" .. ix.db.config.adapter .. "\")")
+
+    timer.Create("ixDatabaseThink", 0.5, 0, function()
+        mysql:Think()
+    end)
+
 end
 
-local ignore = function() end
-function GM:LiliaTablesLoaded()
-    lia.database.query("ALTER TABLE IF EXISTS lia_players ADD COLUMN _firstJoin DATETIME"):catch(ignore)
-    lia.database.query("ALTER TABLE IF EXISTS lia_players ADD COLUMN _lastJoin DATETIME"):catch(ignore)
-    lia.database.query("ALTER TABLE IF EXISTS lia_items ADD COLUMN _quantity INTEGER"):catch(ignore)
+function GM:DatabaseConnectionFailed()
+    lia.print(lia.color.red, "Database Connection Failed. (\"" .. ix.db.config.adapter .. "\")")
 end

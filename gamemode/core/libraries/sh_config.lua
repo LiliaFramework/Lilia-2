@@ -28,4 +28,10 @@ function lia.config.Get( sName, fallback )
 	return config.default or fallback or config.default
 end
 
+CAMI.RegisterPrivilege({
+	Name = "Lilia - Manage Config",
+	Description = "Allows the user to manage the server config.",
+	MinAccess = "superadmin"
+})
+
 hook.Run( "OnConfigLoaded" )

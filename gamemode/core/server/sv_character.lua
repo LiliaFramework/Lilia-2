@@ -12,6 +12,8 @@ function lia.character.New( data, id, steamID )
 	character.id = id or 0
 	character.steamID = steamID
 
+	// create it in the database
+
 	return character
 end
 
@@ -39,7 +41,7 @@ function lia.character.Remove( charID )
 	hook.Run( "CharacterRemoved", character )
 
 	lia.character.loaded[charID] = nil
-	lia.db.query( "DELETE FROM lia_characters WHERE id = " .. charID .. ";", function() end )
+	lia.database.query( "DELETE FROM lia_characters WHERE id = " .. charID .. ";", function() end )
 end
 
 function lia.character.Load( charID, data )
