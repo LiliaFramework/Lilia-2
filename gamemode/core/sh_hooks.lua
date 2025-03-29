@@ -21,3 +21,12 @@ end
 function GM:CanPlayerCreateCharacter( pClient )
     return true
 end
+
+function GM:OnLocalizationLoaded()
+    lia.language.Add( "eng", {
+        settings = "Settings",
+        options = "Options",
+        ["language"] = "Language",
+        you = "You",
+    } )
+end
