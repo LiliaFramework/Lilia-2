@@ -3,7 +3,7 @@ lia.data = lia.data or {}
 lia.data.stored = lia.data.stored or {}
 
 local function GetDataPath(bIgnoreMap)
-    return "lilia/" .. SCHEMA.folder .. "/" .. (bIgnoreMap and "" or game.GetMap() .. "/")
+    return "lilia/" .. (bIgnoreMap and "" or game.GetMap() .. "/")
 end
 
 function lia.data.Set(sKey, value, bIgnoreMap)
@@ -11,7 +11,7 @@ function lia.data.Set(sKey, value, bIgnoreMap)
 
     file.CreateDir(path)
 
-    file.Write(path .. sKey .. ".txt", util.TableToJSON({value}))
+    file.Write(path .. ".txt", util.TableToJSON({value}))
 
     lia.data.stored[sKey] = value
 
@@ -29,17 +29,16 @@ function lia.data.Get(sKey, default, bIgnoreMap, bRefresh)
 
     local path = GetDataPath( bIgnoreMap)
 
-    local contents = file.Read(path .. sKey .. ".txt", "DATA")
+    local contents = file.Read(path .. ".txt", "DATA")
 
     if contents and contents != "" then
-        local stat, decoded = pcall(util.JSONToTable, contents)
+        local success, data = pcall(util.JSONToTable, contents)
+        if success and istable(data) then
+           value = data
 
-        if stat and decoded then
-            local value = decoded[1]
-
-            if value != nil then
+           if value != nil then
                 return value
-            end
+           end
         end
     end
 
@@ -49,10 +48,10 @@ end
 function lia.data.Remove(sKey, bIgnoreMap)
     local path = GetDataPath(bIgnoreMap)
 
-    local contents = file.Read(path .. sKey .. ".txt", "DATA")
+    local contents = file.Read(path .. ".txt", "DATA")
 
     if contents and contents != "" then
-        file.Delete(path .. sKey .. ".txt")
+        file.Delete(path .. ".txt")
         lia.data.stored[sKey] = nil
 
         return true
