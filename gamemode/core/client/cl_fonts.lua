@@ -2,13 +2,13 @@ lia.font = lia.font or {
     stored = {}
 }
 
-function lia.font.Register(sName, tFontData)
+function lia.font.Register( sName, tFontData )
     if not sName or not tFontData then
-        return lia.print(lia.color.consoleClientErr, "[Font] Invalid font name or data provided.")
+        return lia.error( "[Font] Invalid font name or data provided." )
     end
 
-    surface.CreateFont(sName, tFontData)
-    lia.font.stored[sName] = tFontData
+    surface.CreateFont( sName, tFontData )
+    lia.font.stored[ sName ] = tFontData
 end
 
 lia.font.Register("liaSmallFont", {

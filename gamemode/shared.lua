@@ -63,6 +63,13 @@ function lia.print( ... )
 	MsgC( SERVER and lia.color.consoleServerMsg or lia.color.consoleClientMsg, "[Lilia] ", unpack( packed ) )
 end
 
+function lia.error( ... )
+	local packed = { ... }
+	packed[ #packed + 1 ] = "\n"
+
+	MsgC( SERVER and lia.color.consoleServerErr or lia.color.consoleClientErr, "[Lilia] [ERROR] ", unpack( packed ) )
+end
+
 function lia.Include(sName, sRealm)
 	if sName == nil then return lia.print( "[Include] ", lia.color.Get( "red" ), "File name is missing" ) end
 
