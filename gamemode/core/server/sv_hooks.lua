@@ -17,7 +17,7 @@ function GM:DatabaseConnected()
     -- Create the SQL tables if they do not exist.
     lia.database.LoadTables()
 
-    lia.print(lia.color.green, "Database Connected. (\"" .. ix.db.config.adapter .. "\")")
+    lia.print(lia.color.green, "Database Connected. (\"" .. lia.database.config.adapter .. "\")")
 
     timer.Create("ixDatabaseThink", 0.5, 0, function()
         mysql:Think()
@@ -26,7 +26,7 @@ function GM:DatabaseConnected()
 end
 
 function GM:DatabaseConnectionFailed()
-    lia.print(lia.color.red, "Database Connection Failed. (\"" .. ix.db.config.adapter .. "\")")
+    lia.print(lia.color.red, "Database Connection Failed. (\"" .. lia.database.config.adapter .. "\")")
 end
 
 function GM:PreCleanupMap()

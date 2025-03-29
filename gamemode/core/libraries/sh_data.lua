@@ -26,7 +26,7 @@ if SERVER then
         end
     end
 
-    timer.Create("liaSaveData", lia.config.get("DataSaveInterval", 600), 0, function()
+    timer.Create("liaSaveData", 600, 0, function()
         hook.Run("SaveData")
         hook.Run("PersistenceSave")
     end)
