@@ -13,6 +13,17 @@ function lia.character.New( data, id, steamID )
 	character.steamID = steamID
 
 	// create it in the database
+	local mysql = mysql:Insert("lia_characters")
+		mysql:Insert("id", character.id)
+
+		--[[ fuck me dude, kys
+		for k, v in pairs( lia.character.vars ) do
+			if v.field and character.vars[ k ] ~= nil then
+				mysql:Insert(v.field, character.vars[ k ])
+			end
+		end
+		]]
+	mysql:Execute()
 
 	return character
 end

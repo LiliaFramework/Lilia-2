@@ -13,10 +13,14 @@ function lia.character.RegisterVariable( sName, tVarData )
 
 	lia.character.vars[ sName ] = tVarData
 
+	local characterMeta = lia.meta.character
 	local funcName = "Set" .. string.sub( sName, 1, 1 ):upper() .. string.sub( sName, 2 )
 
-	local characterMeta = lia.meta.character
 	characterMeta[funcName] = function(self, value, receivers)
+		if tVarData.OnSet then
+			tVarData:OnSet( self, value )
+		end
+
 		self.vars[sName] = value
 
 		if not tVarData.noNetwork then
@@ -43,6 +47,17 @@ function lia.character.RegisterVariable( sName, tVarData )
 
 	funcName = "Get" .. string.sub( sName, 1, 1 ):upper() .. string.sub( sName, 2 )
 	characterMeta[ funcName ] = function(self)
+		if tVarData.OnGet then
+			return tVarData:OnGet( self, self.vars[ sName ] )
+		end
+
 		return self.vars[ sName ]
 	end
 end
+
+lia.character.RegisterVariable("name", {
+	field = "name",
+	fieldType = "string",
+	default = "John Doe",
+	noNetwork = false,
+})
