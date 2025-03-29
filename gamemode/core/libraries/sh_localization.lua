@@ -15,14 +15,11 @@ end
 
 function lia.language.GetPhrase( sPhrase, sLang )
 	if sLang == nil then
-		sLang = "eng"
+		sLang = CLIENT and lia.option.Get("language", "eng") or "eng"
 	end
 
-	print("Getting phrase: " .. sPhrase .. " in language: " .. sLang)
-
-	if lia.language.data[ sName ] and lia.language.data[ sName ][ sPhrase ] then
-		print("Found phrase: " .. lia.language.data[ sName ][ sPhrase ])
-		return lia.language.data[ sName ][ sPhrase ]
+	if lia.language.data[ sLang ] and lia.language.data[ sLang ][ sPhrase ] then
+		return lia.language.data[ sLang ][ sPhrase ]
 	end
 
 	return sPhrase
