@@ -74,7 +74,6 @@ function GM:HUDPaint()
         rows[3] = rows[3] .. " | Angle " .. math.Round( client:GetAngles().p, 2 ) .. ", " .. math.Round( client:GetAngles().y, 2 ) .. ", " .. math.Round( client:GetAngles().r, 2 )
         rows[4] = "FPS " .. math.Round( 1 / FrameTime() ) .. " | Latency: " .. math.Round( client:Ping() ) .. "ms"
 
-
         for k, v in ipairs(rows) do
             draw.SimpleText( v, "DebugOverlay", ScrW() - 20, 5 + ( k - 1 ) * 15, k == 1 and lia.color.springgreen or lia.color.white, TEXT_ALIGN_RIGHT )
         end
