@@ -3,7 +3,7 @@ lia.data = lia.data or {}
 lia.data.stored = lia.data.stored or {}
 
 local function GetDataPath(bIgnoreMap)
-    return "lilia/" .. (bIgnoreMap and "data" or game.GetMap() .. "/")
+    return "lilia/"
 end
 
 function lia.data.Set(sKey, value, bIgnoreMap)
@@ -11,9 +11,15 @@ function lia.data.Set(sKey, value, bIgnoreMap)
 
     file.CreateDir(path)
 
-    file.Write(path .. ".txt", util.TableToJSON({value}))
+    if not bIgnoreMap then
+        lia.data.stored[game.GetMap()] = lia.data.stored[game.GetMap()] or {}
+        lia.data.stored[game.GetMap()][sKey] = value
 
-    lia.data.stored[sKey] = value
+    else
+        lia.data.stored[sKey] = value
+    end
+
+    file.Write(path .. "data.txt", util.TableToJSON(lia.data.stored, true))
 
     return path
 end
