@@ -22,3 +22,5 @@ function playerMeta:GetCharacter()
 
     return nil
 end
+
+playerMeta.GetChar = playerMeta.GetCharacter

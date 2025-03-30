@@ -48,6 +48,8 @@ function lia.option.Load()
 			lia.option.localOption[ k ] = v.default
 		end
 	end
-end
 
-lia.option.Load()
+	net.Start( "lia.option.Load" )
+		net.WriteTable( lia.option.localOption )
+	net.SendToServer()
+end

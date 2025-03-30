@@ -149,6 +149,8 @@ lia.IncludeDir("core", false, true)
 function GM:Initialize()
 	-- TODO
 
+	lia.config.Load()
+	if CLIENT then lia.option.Load() end
 	-- Initiate Settings, Config
 	-- Initiate Database
 	-- Include files

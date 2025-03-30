@@ -1,6 +1,6 @@
 lia.character = lia.character or {}
 
-function lia.character.New( data, id, steamID )
+function lia.character.Create( data, id )
 	local character = setmetatable( { vars = {} }, lia.meta.character )
 
 	for k, v in pairs( lia.character.vars ) do
@@ -9,20 +9,40 @@ function lia.character.New( data, id, steamID )
 		end
 	end
 
-	character.id = id or 0
-	character.steamID = steamID
+	data.schema = SCHEMA and SCHEMA.folder or "lilia"
+	data.createTime = math.floor( os.time() )
+	data.money = data.money or lia.config.Get( "startMoney", 10 )
 
 	// create it in the database
 	local mysql = mysql:Insert("lia_characters")
-		mysql:Insert("id", character.id)
+		mysql:Insert( "name", data.name or "" )
+		mysql:Insert( "description", data.description or "" )
+		mysql:Insert( "model", data.model or "" )
+		mysql:Insert( "faction", data.faction or "" )
+		mysql:Insert( "data", util.TableToJSON( data.data or {} ) )
+		mysql:Insert( "steamID", data.steamID )
+		mysql:Insert( "schema", data.schema )
+		mysql:Insert( "createTime", data.createTime )
+		mysql:Insert( "money", data.money )
 
-		--[[ fuck me dude, kys
-		for k, v in pairs( lia.character.vars ) do
-			if v.field and character.vars[ k ] ~= nil then
-				mysql:Insert(v.field, character.vars[ k ])
-			end
-		end
-		]]
+		mysql:Callback(function(result, status, lastID)
+			local invQuery = mysql:Insert("lia_inventories")
+				invQuery:Insert( "character_id", id )
+				invQuery:Insert( "inventory_id", 1 )
+				invQuery:Insert( "inventory_type", "main" )
+
+				invQuery:Callback(function(iresult, istatus, invLastID)
+					if result and result > 0 then
+						character.vars.invID = lastID
+					end
+
+					character.vars.id = lastID
+					lia.character.loaded[lastID] = character
+
+					hook.Run("OnCharacterCreated", character, data)
+				end)
+			invQuery:Execute()
+		end)
 	mysql:Execute()
 
 	return character

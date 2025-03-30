@@ -3,7 +3,7 @@ net.Receive( "lia.character.Create", function( length, pClient )
 	local hookRun = hook.Run( "CanPlayerCreateCharacter", pClient )
 	if hookRun == false then return end
 
-	lia.character.create( pClient, sName, sModel, sSkin, sGender )
+
 end )
 
 util.AddNetworkString( "lia.character.Delete" )
@@ -11,6 +11,20 @@ util.AddNetworkString( "lia.character.Load" )
 util.AddNetworkString( "lia.character.UpdateVar" )
 
 util.AddNetworkString( "lia.option.Set" )
+util.AddNetworkString( "lia.option.Load" )
+net.Receive( "lia.option.Load", function( length, pClient )
+	local clientOptions = net.ReadTable()
+	if not clientOptions then return end
+
+	lia.option.client[ pClient ] = lia.option.client[ pClient ] or {}
+
+	for k, v in pairs( clientOptions ) do
+		if lia.option.stored[ k ] then
+			lia.option.client[ pClient ][ k ] = v
+		end
+	end
+end )
+
 util.AddNetworkString( "lia.config.Set" )
 net.Receive( "lia.config.Set", function( length, pClient )
 	local hookRun = hook.Run( "CanPlayerManageConfig", pClient )

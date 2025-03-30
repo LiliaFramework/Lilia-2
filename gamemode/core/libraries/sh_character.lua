@@ -2,6 +2,7 @@
 lia.character = lia.character or {}
 lia.character.loaded = lia.character.loaded or {}
 lia.character.vars = lia.character.vars or {}
+lia.meta.character = lia.meta.character or {}
 
 function lia.character.RegisterVariable( sName, tVarData )
 	if not sName or not tVarData then return end
@@ -61,3 +62,27 @@ lia.character.RegisterVariable("name", {
 	default = "John Doe",
 	noNetwork = false,
 })
+
+function lia.character.New(data, id, client, steamID)
+    if (data.name) then
+        data.name = data.name:gsub("#", "#​")
+    end
+
+    if (data.description) then
+        data.description = data.description:gsub("#", "#​")
+    end
+
+    local character = setmetatable({vars = {}}, lia.meta.character)
+        for k, v in pairs(data) do
+            if (v != nil) then
+                character.vars[k] = v
+            end
+        end
+
+        character.id = id or 0
+        character.player = client
+
+		character.steamID = SERVER and IsValid(client) and client:SteamID64() or steamID
+
+    return character
+end

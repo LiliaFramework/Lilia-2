@@ -46,7 +46,8 @@ function GM:ShutDown()
     lia.shuttingDown = true
     hook.Run("SaveData")
     for _, v in player.Iterator() do
-        v:saveLiliaData()
-        if v:getChar() then v:getChar():save() end
+        -- TODO: Add this function ig
+        -- v:saveLiliaData()
+        if v:GetChar() then v:GetChar():Save() end
     end
 end
