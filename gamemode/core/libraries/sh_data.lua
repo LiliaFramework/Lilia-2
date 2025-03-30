@@ -15,6 +15,9 @@ function lia.data.Set(sKey, sValue, bIgnoreMap)
         lia.data.stored[ game.GetMap() ] = table.Copy(lia.data.stored[ game.GetMap() ]) or {}
         lia.data.stored[ game.GetMap() ][ sKey ] = sValue
 
+        if sValue == nil and table.Count( lia.data.stored[ game.GetMap() ] ) == 0 then
+            lia.data.stored[ game.GetMap() ] = nil
+        end
     else
         lia.data.stored[ sKey ] = sValue
     end
