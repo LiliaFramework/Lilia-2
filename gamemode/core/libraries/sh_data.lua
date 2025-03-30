@@ -12,7 +12,7 @@ function lia.data.Set(sKey, sValue, bIgnoreMap)
     file.CreateDir( path )
 
     if not bIgnoreMap then
-        lia.data.stored[ game.GetMap() ] = lia.data.stored[ game.GetMap() ] or {}
+        lia.data.stored[ game.GetMap() ] = table.Copy(lia.data.stored[ game.GetMap() ]) or {}
         lia.data.stored[ game.GetMap() ][ sKey ] = sValue
 
     else
@@ -24,47 +24,28 @@ function lia.data.Set(sKey, sValue, bIgnoreMap)
     return path
 end
 
-function lia.data.Get(sKey, default, bIgnoreMap, bRefresh)
-    if not bRefresh then
-        local stored = lia.data.stored[sKey]
-
-        if stored != nil then
-            return stored
-        end
-    end
-
-    local path = GetDataPath( bIgnoreMap)
-
-    local contents = file.Read(path .. ".txt", "DATA")
-
-    if contents and contents != "" then
-        local success, data = pcall(util.JSONToTable, contents)
-        if success and istable(data) then
-           value = data
-
-           if value != nil then
-                return value
-           end
-        end
+function lia.data.Get(sKey, default, bIgnoreMap)
+    local stored = bIgnoreMap and lia.data.stored[sKey] or lia.data.stored[game.GetMap()] and lia.data.stored[game.GetMap()][sKey]
+    if stored != nil then
+        return stored
     end
 
     return default
 end
 
-function lia.data.Remove(sKey, bIgnoreMap)
-    local path = GetDataPath(bIgnoreMap)
+function lia.data.Load()
+    local path = GetDataPath()
 
-    local contents = file.Read(path .. ".txt", "DATA")
-
-    if contents and contents != "" then
-        file.Delete(path .. ".txt")
-        lia.data.stored[sKey] = nil
-
-        return true
+    if file.Exists( path .. "data.txt", "DATA" ) then
+        lia.data.stored = util.JSONToTable( file.Read( path .. "data.txt", "DATA" ) )
     end
 
-    return false
+    if lia.data.stored == nil then
+        lia.data.stored = {}
+    end
 end
+
+lia.data.Load()
 
 if SERVER then
     timer.Create("liaSaveData", 600, 0, function()
