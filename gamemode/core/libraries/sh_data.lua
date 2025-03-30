@@ -2,24 +2,24 @@ file.CreateDir("lilia")
 lia.data = lia.data or {}
 lia.data.stored = lia.data.stored or {}
 
-local function GetDataPath(bIgnoreMap)
+local function GetDataPath( bIgnoreMap )
     return "lilia/"
 end
 
-function lia.data.Set(sKey, value, bIgnoreMap)
-    local path = GetDataPath(bIgnoreMap)
+function lia.data.Set(sKey, sValue, bIgnoreMap)
+    local path = GetDataPath( bIgnoreMap )
 
-    file.CreateDir(path)
+    file.CreateDir( path )
 
     if not bIgnoreMap then
-        lia.data.stored[game.GetMap()] = lia.data.stored[game.GetMap()] or {}
-        lia.data.stored[game.GetMap()][sKey] = value
+        lia.data.stored[ game.GetMap() ] = lia.data.stored[ game.GetMap() ] or {}
+        lia.data.stored[ game.GetMap() ][ sKey ] = sValue
 
     else
-        lia.data.stored[sKey] = value
+        lia.data.stored[ sKey ] = sValue
     end
 
-    file.Write(path .. "data.txt", util.TableToJSON(lia.data.stored, true))
+    file.Write( path .. "data.txt", util.TableToJSON( lia.data.stored, true ) )
 
     return path
 end
