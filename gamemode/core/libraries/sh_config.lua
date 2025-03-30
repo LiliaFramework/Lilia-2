@@ -5,11 +5,6 @@ lia.config.values = lia.config.values or {}
 function lia.config.Register( sName, tData )
 	if not sName or not tData then return end
 
-	if lia.config.stored[ sName ] then
-		lia.error("Config " .. sName .. " already exists!\n")
-		return
-	end
-
 	lia.config.stored[ sName ] = tData
 end
 
