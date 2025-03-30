@@ -144,7 +144,6 @@ function SKIN:PaintListViewLine(panel, w, h)
 end
 
 function SKIN:PaintScrollBarGrip(_, w, h)
-    print(lia.config.Get("color", lia.color.white))
     surface.SetDrawColor(lia.config.Get("color", lia.color.white))
     surface.DrawRect(0, 0, w, h)
 end
