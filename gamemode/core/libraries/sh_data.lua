@@ -3,7 +3,7 @@ lia.data = lia.data or {}
 lia.data.stored = lia.data.stored or {}
 
 local function GetDataPath(bIgnoreMap)
-    return "lilia/" .. (bIgnoreMap and "" or game.GetMap() .. "/")
+    return "lilia/" .. (bIgnoreMap and "data" or game.GetMap() .. "/")
 end
 
 function lia.data.Set(sKey, value, bIgnoreMap)
