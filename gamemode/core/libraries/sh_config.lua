@@ -20,7 +20,7 @@ function lia.config.Get( sName, fallback )
 		return lia.error("Config " .. sName .. " does not exist!")
 	end
 
-	return config.default or fallback or config.default
+	return lia.config.values[sName] or fallback or config.default
 end
 
 CAMI.RegisterPrivilege({
