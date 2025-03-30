@@ -41,6 +41,10 @@ function GM:ShouldDrawHUD()
     return true
 end
 
+function GM:ShouldDrawDebugHUD()
+    return GetConVar("developer"):GetInt() > 0
+end
+
 function GM:HUDShouldDraw( sElement )
     -- TODO: When we implement our own HUD, we can return true here to allow drawing of the custom HUD elements
 
@@ -54,13 +58,30 @@ local vignetteMaterial = lia.util.GetMaterial( "lilia/vignette.png" )
 function GM:HUDPaint()
     local client = LocalPlayer()
 
-    local hookResult = hook.Run( "ShouldDrawHUD" )
-    if hookResult == false then return end
-
     local vignette = hook.Run( "ShouldDrawVignette" )
     if vignette != false then
         surface.SetDrawColor( lia.color.white )
         surface.SetMaterial( vignetteMaterial )
         surface.DrawTexturedRect( 0, 0, ScrW(), ScrH() )
+    end
+
+    local debugHUD = hook.Run( "ShouldDrawDebugHUD" )
+    if debugHUD != false then
+        local rows = {}
+        rows[1] = "Lilia Framework 2.0 | " .. GetHostName() .. " (" .. game.GetMap() .. ")"
+        rows[2] = "Client: " .. client:Nick() .. " (" .. client:SteamID64() .. ")" .. " | " .. os.date( "%d/%m/%Y" ) .. " (" ..  os.date( "%H:%M:%S" ) .. ")"
+        rows[3] = "Vector " .. math.Round( client:GetPos().x, 2 ) .. ", " .. math.Round( client:GetPos().y, 2 ) .. ", " .. math.Round( client:GetPos().z, 2 )
+        rows[3] = rows[3] .. " | Angle " .. math.Round( client:GetAngles().p, 2 ) .. ", " .. math.Round( client:GetAngles().y, 2 ) .. ", " .. math.Round( client:GetAngles().r, 2 )
+        rows[4] = "FPS " .. math.Round( 1 / FrameTime() ) .. " | Latency: " .. math.Round( client:Ping() ) .. "ms"
+
+
+        for k, v in ipairs(rows) do
+            draw.SimpleText( v, "DebugOverlay", ScrW() - 20, 5 + ( k - 1 ) * 15, k == 1 and lia.color.springgreen or lia.color.white, TEXT_ALIGN_RIGHT )
+        end
+    end
+
+    local hookResult = hook.Run( "ShouldDrawHUD" )
+    if hookResult != false then
+        -- Draw the HUD here
     end
 end
