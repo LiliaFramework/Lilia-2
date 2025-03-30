@@ -8,6 +8,8 @@ GM.Website = "https://discord.gg/esCRH5ckbQ"
 widgets.PlayerTick = nil
 hook.Remove( "PlayerTick", "TickWidgets" )
 
+file.CreateDir("lilia")
+
 lia = lia or {
 	util = util or {},
 	meta = meta or {},
