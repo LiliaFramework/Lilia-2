@@ -11,7 +11,7 @@ hook.Remove( "PlayerTick", "TickWidgets" )
 file.CreateDir("lilia")
 
 lia = lia or {
-	util = util or {},
+	utility = utility or {},
 	meta = meta or {},
 	color = color or {},
 }
@@ -144,23 +144,35 @@ function lia.IncludeDir(sDir, bIgnoreBase, bIncludeSubDirs)
 	end
 end
 
-lia.IncludeDir("core", false, true)
+lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/libraries/thirdparty", true, true)
+lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/libraries", true, false)
+lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/server", true, true)
+lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/client", true, true)
+lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core", true, false)
+lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/meta", true, false)
 
 function GM:Initialize()
 	-- TODO
 
-	lia.config.Load()
+	if SERVER then lia.config.Load() end
 	if CLIENT then lia.option.Load() end
 	-- Initiate Settings, Config
 	-- Initiate Database
 	-- Include files
 end
 
+lia_reloaded = false
+
 function GM:OnReloaded()
+	if lia_reloaded then return end
+
 	lia.IncludeDir("core", true)
+	lia.module.Load()
 
 	local currentSysTime = SysTime()
 	local deltaTime = currentSysTime - lastSysTime
 
 	lia.print("Reloaded gamemode in " .. string.format("%.2f", deltaTime) .. " seconds")
+
+	lia_reloaded = true
 end

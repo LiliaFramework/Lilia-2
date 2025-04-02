@@ -1,6 +1,6 @@
-local blurMaterial = lia.util.GetMaterial( "pp/blurscreen" )
+local blurMaterial = lia.utility.GetMaterial( "pp/blurscreen" )
 
-function lia.util.DrawBlur( panel, amount )
+function lia.utility.DrawBlur( panel, amount )
     local scrW, scrH = panel:GetSize()
     local x, y = panel:GetPos()
 
@@ -24,7 +24,7 @@ function lia.util.DrawBlur( panel, amount )
     surface.DrawTexturedRect( x, y, scrW, scrH )
 end
 
-function lia.util.DrawBlur2D( x, y, width, height, amount )
+function lia.utility.DrawBlur2D( x, y, width, height, amount )
     local scrW, scrH = ScrW(), ScrH()
     x, y = x or 0, y or 0
     width, height = width or scrW, height or scrH

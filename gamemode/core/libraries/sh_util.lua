@@ -1,5 +1,5 @@
 local materialsCache = {}
-function lia.util.GetMaterial(sMaterialPath, sParams)
+function lia.utility.GetMaterial(sMaterialPath, sParams)
     if not sMaterialPath then return end
 
     if materialsCache[sMaterialPath] then
@@ -12,7 +12,7 @@ function lia.util.GetMaterial(sMaterialPath, sParams)
     return material
 end
 
-function lia.util.FindPlayer(identifier)
+function lia.utility.FindPlayer(identifier)
     for k, v in player.Iterator() do
         if identifier == v:SteamID() or identifier == v:SteamID64() or identifier:find(v:Name()) then
             return v

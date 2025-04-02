@@ -54,7 +54,7 @@ function GM:HUDShouldDraw( sElement )
     return true
 end
 
-local vignetteMaterial = lia.util.GetMaterial( "lilia/vignette.png" )
+local vignetteMaterial = lia.utility.GetMaterial( "lilia/vignette.png" )
 function GM:HUDPaint()
     local client = LocalPlayer()
 
@@ -69,9 +69,12 @@ function GM:HUDPaint()
     if debugHUD != false then
         local rows = {}
         rows[1] = "Lilia Framework 2.0 | " .. GetHostName() .. " (" .. game.GetMap() .. ")"
+        local vector = client:GetPos()
         rows[2] = "Client: " .. client:Nick() .. " (" .. client:SteamID64() .. ")" .. " | " .. os.date( "%d/%m/%Y" ) .. " (" ..  os.date( "%H:%M:%S" ) .. ")"
-        rows[3] = "Vector " .. math.Round( client:GetPos().x, 2 ) .. ", " .. math.Round( client:GetPos().y, 2 ) .. ", " .. math.Round( client:GetPos().z, 2 )
-        rows[3] = rows[3] .. " | Angle " .. math.Round( client:GetAngles().p, 2 ) .. ", " .. math.Round( client:GetAngles().y, 2 ) .. ", " .. math.Round( client:GetAngles().r, 2 )
+        rows[3] = "Vector " .. math.Round( vector.x, 2 ) .. ", " .. math.Round( vector.y, 2 ) .. ", " .. math.Round( vector.z, 2 )
+
+        local angles = client:GetAngles()
+        rows[3] = rows[3] .. " | Angle " .. math.Round( angles.p, 2 ) .. ", " .. math.Round( angles.y, 2 ) .. ", " .. math.Round( angles.r, 2 )
         rows[4] = "FPS " .. math.Round( 1 / FrameTime() ) .. " | Latency: " .. math.Round( client:Ping() ) .. "ms"
 
         for k, v in ipairs(rows) do
