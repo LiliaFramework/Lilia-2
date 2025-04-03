@@ -82,28 +82,28 @@ end
 
 lia.character.RegisterVariable("name", {
 	field = "name",
-	fieldType = "string",
+	fieldType = lia.type.string,
 	default = "John Doe",
 	noNetwork = false,
 })
 
 lia.character.RegisterVariable("description", {
-	field = "model",
-	fieldType = "string",
+	field = "description",
+	fieldType = lia.type.string,
 	default = "",
 	noNetwork = false,
 })
 
 lia.character.RegisterVariable("model", {
 	field = "model",
-	fieldType = "string",
+	fieldType = lia.type.string,
 	default = "",
 	noNetwork = false,
 })
 
 lia.character.RegisterVariable("faction", {
-	field = "model",
-	fieldType = "string",
-	default = "",
+	field = "faction",
+	fieldType = lia.type.number,
+	default = 0,
 	noNetwork = false,
 })
