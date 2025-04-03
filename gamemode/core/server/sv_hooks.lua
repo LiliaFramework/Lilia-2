@@ -4,7 +4,7 @@ function GM:CanPlayerSuicide()
 end
 
 -- Disallow picking up objects with +use (typically unnecessary)
-function GM:AllowPlayerPickup()
+function GM:AllowPlayerPickup( pClient, eEntity )
     return false
 end
 
@@ -14,19 +14,17 @@ function GM:PlayerSpray()
 end
 
 function GM:DatabaseConnected()
-    -- Create the SQL tables if they do not exist.
     lia.database.LoadTables()
-
     lia.print(lia.color.green, "Database Connected. (\"" .. lia.database.config.adapter .. "\")")
 
-    timer.Create("ixDatabaseThink", 0.5, 0, function()
+    timer.Create("liaDBThink", 0.5, 0, function()
         mysql:Think()
     end)
 
 end
 
 function GM:DatabaseConnectionFailed()
-    lia.print(lia.color.red, "Database Connection Failed. (\"" .. lia.database.config.adapter .. "\")")
+    lia.error("Database Connection Failed. (\"" .. lia.database.config.adapter .. "\")")
 end
 
 function GM:PreCleanupMap()
