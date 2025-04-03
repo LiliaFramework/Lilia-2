@@ -1,4 +1,3 @@
-local lastSysTime = SysTime()
 DeriveGamemode("sandbox")
 
 GM.Name = "Lilia"
@@ -54,9 +53,9 @@ lia.color.green = Color( 0, 255, 0 )
 lia.color.blue = Color( 0, 0, 255 )
 lia.color.yellow = Color( 255, 255, 0 )
 lia.color.cyan = Color( 0, 255, 255 )
-lia.color.springgreen = Color( 0, 255, 127 )
-lia.color.orange = Color( 255, 127, 0 )
-lia.color.purple = Color( 127, 0, 255 )
+lia.color.springgreen = Color( 0, 255, 125 )
+lia.color.orange = Color( 255, 125, 0 )
+lia.color.purple = Color( 125, 0, 255 )
 lia.color.white = color_white
 lia.color.black = color_black
 lia.color.transparent = color_transparent
@@ -94,74 +93,55 @@ function lia.error( ... )
 	local packed = { ... }
 	packed[ #packed + 1 ] = "\n"
 
-	MsgC( SERVER and lia.color.consoleServerErr or lia.color.consoleClientErr, "[Lilia] [ERROR] ", unpack( packed ) )
+	MsgC( lia.color.consolePrefix, "[Lilia] ", SERVER and lia.color.consoleServerErr or lia.color.consoleClientErr, unpack( packed ) )
 end
 
 function lia.Include(sName, sRealm)
 	if sName == nil then return lia.print( "[Include] ", lia.color.Get( "red" ), "File name is missing" ) end
 
 	if ( realm == "server" or sName:find( "sv_" ) ) and SERVER then
-		return include(sName)
+		include(sName)
 	elseif realm == "shared" or sName:find( "shared.lua" ) or sName:find( "sh_" ) then
 		if SERVER then
 			AddCSLuaFile(sName)
 		end
 
-		return include(sName)
+		include(sName)
 	elseif realm == "client" or sName:find("cl_") then
 		if SERVER then
 			AddCSLuaFile(sName)
 		else
-			return include(sName)
+			include(sName)
 		end
 	end
 end
 
-local function IncludeSubDirectories(sDir)
-	local directories = select(2, file.Find(sDir .. "*", "LUA"))
-
-	while #directories > 0 do
-		local directory = table.remove(directories, 1)
-		lia.IncludeDir(sDir .. directory, true, true)
-	end
-end
-
-function lia.IncludeDir(sDir, bIgnoreBase, bIncludeSubDirs)
-	local sBase = "lilia"
-	sBase = sBase .. "/gamemode/"
-
-	-- TODO: Schema Support
-
-	if bIgnoreBase then sBase = "" end
-
-	local files = select(1, file.Find(sBase .. sDir .. "/*.lua", "LUA"))
+function lia.IncludeDir(sDir)
+	local files, dirs = file.Find(sDir .. "/*.lua", "LUA")
 	for _, v in ipairs(files) do
-		lia.Include(sBase .. sDir .. "/" .. v)
+		lia.Include(sDir .. "/" .. v)
 	end
 
-	if bIncludeSubDirs then
-		IncludeSubDirectories(sBase .. sDir .. "/")
+	for _, v in ipairs(dirs) do
+		lia.IncludeDir(sDir .. "/" .. v)
 	end
 end
-
-local aGM = engine.ActiveGamemode()
 
 local function IncludeCore()
-	lia.IncludeDir(aGM .. "/gamemode/core/libraries/thirdparty", true, true)
-	lia.IncludeDir(aGM .. "/gamemode/core/libraries", true, false)
-	lia.IncludeDir(aGM .. "/gamemode/core/server", true, true)
-	lia.IncludeDir(aGM .. "/gamemode/core/client", true, true)
-	lia.IncludeDir(aGM .. "/gamemode/core", true, true)
-	lia.IncludeDir(aGM .. "/gamemode/core/meta", true, false)
+	lia.IncludeDir("lilia/gamemode/core/libraries/thirdparty")
+	lia.IncludeDir("lilia/gamemode/core/libraries")
+	lia.IncludeDir("lilia/gamemode/core/server")
+	lia.IncludeDir("lilia/gamemode/core/client")
+	lia.IncludeDir("lilia/gamemode/core")
+	lia.IncludeDir("lilia/gamemode/core/meta")
 end
+
+IncludeCore()
 
 function GM:Initialize()
-	-- TODO
-
-	-- Initiate Database
-	-- Include files
 end
 
+local lastSysTime = SysTime()
 lia_reloaded = false
 
 function GM:OnReloaded()
