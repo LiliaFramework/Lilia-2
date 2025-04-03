@@ -62,3 +62,7 @@ end
 function GM:ModuleShouldLoad( sModuleID )
     return true
 end
+
+function GM:CanPlayerJoinFaction( pClient, iTeamIndex, iOldTeamIndex )
+    return true
+end
