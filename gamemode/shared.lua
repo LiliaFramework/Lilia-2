@@ -8,6 +8,7 @@ widgets.PlayerTick = nil
 hook.Remove( "PlayerTick", "TickWidgets" )
 
 file.CreateDir("lilia")
+HOOKS_CACHE = {}
 
 lia = lia or {
 	utility = utility or {},
@@ -97,7 +98,7 @@ function lia.error( ... )
 end
 
 function lia.Include(sName, sRealm)
-	if sName == nil then return lia.print( "[Include] ", lia.color.Get( "red" ), "File name is missing" ) end
+	if sName == nil then return lia.error( "[lia.Include] ", lia.color.Get( "red" ), "File name is missing" ) end
 
 	if ( realm == "server" or sName:find( "sv_" ) ) and SERVER then
 		include(sName)
@@ -137,9 +138,6 @@ local function IncludeCore()
 end
 
 IncludeCore()
-
-function GM:Initialize()
-end
 
 local lastSysTime = SysTime()
 lia_reloaded = false

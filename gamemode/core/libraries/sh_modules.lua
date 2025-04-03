@@ -1,10 +1,12 @@
 lia.module = lia.module or {}
-lia.module.stored = lia.module.stored or {}
+lia.module.stored = {}
 
 function lia.module.Load()
-	local modulePath = engine.ActiveGamemode() .. "/gamemode/modules/"
+	local modulePath = "lilia/gamemode/modules/"
 	local files, dirs = file.Find( modulePath .. "*", "LUA" )
 	for k, v in ipairs( dirs ) do
+		if hook.Run( "ModuleShouldLoad", v ) == false then continue end
+
 		if file.Exists( modulePath .. v .. "/sh_init.lua", "LUA" ) then
 			MODULE = { uniqueID = v }
 				lia.Include( modulePath .. v .. "/sh_init.lua" )
@@ -32,6 +34,8 @@ function lia.module.Load()
 		end
 
 		uniqueID = string.StripExtension( uniqueID )
+
+		if hook.Run( "ModuleShouldLoad", uniqueID ) == false then continue end
 
 		MODULE = { uniqueID = uniqueID }
 			lia.Include( modulePath .. v )
