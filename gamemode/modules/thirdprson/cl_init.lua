@@ -2,6 +2,7 @@ local MODULE = MODULE
 
 function MODULE:CanOverrideView( pClient )
     if IsValid( pClient:GetVehicle() ) then return false end
+    if pClient:GetMoveType() == MOVETYPE_NOCLIP then return false end
 
     return true
 end
