@@ -61,5 +61,3 @@ function lia.module.Load()
 		MODULE = nil
 	end
 end
-
-lia.module.Load()

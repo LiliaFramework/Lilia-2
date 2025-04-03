@@ -1,14 +1,10 @@
-lia.option = lia.option or {}
-lia.option.stored = lia.option.stored or {}
 lia.option.localOption = lia.option.localOption or {}
 
 function lia.option.Set( sName, sValue )
 	if not sName or not sValue then return end
 
-	local option = lia.option.Get( sName )
-	if not option then
-		return lia.error("Option " .. sName .. " does not exist!")
-	end
+	local option = lia.option.stored[ sName ]
+	if option == nil then return end
 
 	if not file.Exists("lilia/options.txt", "DATA" ) then
 		file.Write( "lilia/options.txt", "" )
@@ -27,7 +23,7 @@ function lia.option.Get( sName, fallback )
 	if not sName then return end
 
 	local option = lia.option.stored[ sName ]
-	if not option then
+	if option == nil then
 		return lia.error("Option " .. sName .. " does not exist!")
 	end
 

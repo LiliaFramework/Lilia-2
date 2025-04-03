@@ -107,7 +107,7 @@ function lia.Include(sName, sRealm)
 			AddCSLuaFile(sName)
 		end
 
-		include(sName)
+		return include(sName)
 	elseif realm == "client" or sName:find("cl_") then
 		if SERVER then
 			AddCSLuaFile(sName)
@@ -135,6 +135,8 @@ local function IncludeCore()
 	lia.IncludeDir("lilia/gamemode/core/client")
 	lia.IncludeDir("lilia/gamemode/core")
 	lia.IncludeDir("lilia/gamemode/core/meta")
+
+	lia.module.Load()
 end
 
 IncludeCore()
