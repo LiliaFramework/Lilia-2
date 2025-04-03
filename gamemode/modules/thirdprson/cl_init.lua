@@ -15,7 +15,7 @@ function MODULE:CalcView( pClient, vOrigin, aAngles, fFov) -- TODO, hooks ain't 
     local trace
     trace = util.TraceHull({
         start = vOrigin,
-        endpos = vOrigin + aAngles:Forward() * lia.option.Get("thirdperson_offset_x", 0) - aAngles:Right() * lia.option.Get("thirdperson_offset_y", 0) - aAngles:Up() * lia.option.Get("thirdperson_offset_z", 0),
+        endpos = vOrigin + aAngles:Forward() * lia.option.Get("thirdperson_offset_x", 0) - aAngles:Right() * lia.option.Get("thirdperson_offset_y", 0) - aAngles:Up() * lia.option.Get("thirdperson_offset_z", 0) + ( pClient:Crouching() and pClient:GetViewOffsetDucked() or vector_origin ),
         filter = ply,
         mins = Vector(-4, -4, -4),
         maxs = Vector(4, 4, 4)
