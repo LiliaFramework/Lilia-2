@@ -12,6 +12,8 @@ function lia.faction.Setup( tFactionData )
 
 	FACTION.index = #lia.faction.indices + 1
 
+	team.SetUp(FACTION.index, FACTION.name, FACTION.color, true)
+
 	lia.faction.stored[tFactionData.uniqueID] = FACTION
 	lia.faction.indices[FACTION.index] = FACTION
 
