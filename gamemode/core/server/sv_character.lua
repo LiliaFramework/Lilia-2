@@ -1,14 +1,6 @@
 lia.character = lia.character or {}
 
 function lia.character.Create( data, id )
-	local character = setmetatable( { vars = {} }, lia.meta.character )
-
-	for k, v in pairs( lia.character.vars ) do
-		if v.field and data[ v.field ] ~= nil then
-			character.vars[ k ] = data[ v.field ]
-		end
-	end
-
 	data.schema = SCHEMA and SCHEMA.folder or "lilia"
 	data.createTime = math.floor( os.time() )
 	data.money = data.money or lia.config.Get( "startMoney", 10 )
@@ -32,8 +24,16 @@ function lia.character.Create( data, id )
 				invQuery:Insert( "inventory_type", "main" )
 
 				invQuery:Callback(function(iresult, istatus, invLastID)
+					local character = lia.character.New(data, lastID, player.GetBySteamID64(data.steamID), data.steamID)
+
 					if result and result > 0 then
 						character.vars.invID = lastID
+					end
+
+					for k, v in pairs( lia.character.vars ) do
+						if v.field and data[ v.field ] ~= nil then
+							character.vars[ k ] = data[ v.field ]
+						end
 					end
 
 					character.vars.id = lastID
