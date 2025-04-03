@@ -27,3 +27,7 @@ function MODULE:CalcView( pClient, vOrigin, aAngles, fFov) -- TODO, hooks ain't 
 
     return view
 end
+
+concommand.Add("lia_thirdperson_toggle", function()
+    lia.option.Set( "thirdperson", not lia.option.Get( "thirdperson" ) )
+end)

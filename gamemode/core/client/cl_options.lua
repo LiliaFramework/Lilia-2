@@ -1,7 +1,7 @@
 lia.option.localOption = lia.option.localOption or {}
 
 function lia.option.Set( sName, sValue )
-	if not sName or not sValue then return end
+	if sName == nil or sValue == nil then return end
 
 	local option = lia.option.stored[ sName ]
 	if option == nil then return end
