@@ -49,7 +49,13 @@ function lia.option.Load()
 		end
 	end
 
-	net.Start( "lia.option.Load" )
-		net.WriteTable( lia.option.localOption )
-	net.SendToServer()
+	print("[lia.option] Loaded " .. table.Count( lia.option.localOption ) .. " options.")
+
+	timer.Simple(1, function()
+		if not IsValid( LocalPlayer() ) then return end
+
+		net.Start( "lia.option.Load" )
+			net.WriteTable( lia.option.localOption )
+		net.SendToServer()
+	end)
 end

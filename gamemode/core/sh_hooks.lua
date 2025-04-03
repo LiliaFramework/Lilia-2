@@ -11,6 +11,7 @@ end
 function GM:InitPostEntity()
     if CLIENT then
         lia.localClient = LocalPlayer()
+        lia.option.Load()
     end
 end
 
@@ -20,13 +21,4 @@ end
 
 function GM:CanPlayerCreateCharacter( pClient )
     return true
-end
-
-function GM:OnLocalizationLoaded()
-    lia.language.Add( "eng", {
-        settings = "Settings",
-        options = "Options",
-        ["language"] = "Language",
-        you = "You",
-    } )
 end

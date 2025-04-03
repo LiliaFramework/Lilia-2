@@ -144,19 +144,20 @@ function lia.IncludeDir(sDir, bIgnoreBase, bIncludeSubDirs)
 	end
 end
 
-lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/libraries/thirdparty", true, true)
-lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/libraries", true, false)
-lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/server", true, true)
-lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/client", true, true)
-lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core", true, false)
-lia.IncludeDir(engine.ActiveGamemode() .. "/gamemode/core/meta", true, false)
+local aGM = engine.ActiveGamemode()
+
+local function IncludeCore()
+	lia.IncludeDir(aGM .. "/gamemode/core/libraries/thirdparty", true, true)
+	lia.IncludeDir(aGM .. "/gamemode/core/libraries", true, false)
+	lia.IncludeDir(aGM .. "/gamemode/core/server", true, true)
+	lia.IncludeDir(aGM .. "/gamemode/core/client", true, true)
+	lia.IncludeDir(aGM .. "/gamemode/core", true, true)
+	lia.IncludeDir(aGM .. "/gamemode/core/meta", true, false)
+end
 
 function GM:Initialize()
 	-- TODO
 
-	if SERVER then lia.config.Load() end
-	if CLIENT then lia.option.Load() end
-	-- Initiate Settings, Config
 	-- Initiate Database
 	-- Include files
 end
@@ -166,7 +167,7 @@ lia_reloaded = false
 function GM:OnReloaded()
 	if lia_reloaded then return end
 
-	lia.IncludeDir("core", true)
+	IncludeCore()
 	lia.module.Load()
 
 	local currentSysTime = SysTime()

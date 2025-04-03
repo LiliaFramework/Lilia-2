@@ -1,3 +1,9 @@
+lia.option.Register("language", {
+	name = "Language",
+	type = lia.type.string,
+	default = "eng",
+})
+
 lia.config.Register( "color", {
 	name = "Color",
 	type = lia.type.color,

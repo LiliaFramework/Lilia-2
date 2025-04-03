@@ -1,5 +1,5 @@
 lia.option = lia.option or {}
-lia.option.stored = {}
+lia.option.stored = lia.option.stored or {}
 
 function lia.option.Register( sName, tData )
 	if not sName or not tData then return end

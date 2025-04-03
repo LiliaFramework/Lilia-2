@@ -1,4 +1,3 @@
-lia.option = lia.option or {}
 lia.option.client = lia.option.client or {}
 
 function lia.option.Set( pClient, sName, sValue )
@@ -26,6 +25,8 @@ function lia.option.Get( pClient, sName, fallback )
 		return lia.error("Option " .. sName .. " does not exist!")
 	end
 
-	lia.option.client[ client ] = lia.option.client[ client ] or {}
-	return lia.option.client[ client ][ sName ] or fallback or option.default
+	local clientData = lia.option.client[ pClient ]
+
+	clientData = clientData or {}
+	return clientData[ sName ] or fallback or option.default
 end

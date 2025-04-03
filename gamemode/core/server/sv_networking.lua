@@ -14,8 +14,9 @@ util.AddNetworkString( "lia.option.Set" )
 util.AddNetworkString( "lia.option.Load" )
 net.Receive( "lia.option.Load", function( length, pClient )
 	local clientOptions = net.ReadTable()
-	if not clientOptions then return end
+	if not clientOptions then lia.error("NO TABLE") return end
 
+	lia.print("MOVED")
 	lia.option.client[ pClient ] = lia.option.client[ pClient ] or {}
 
 	for k, v in pairs( clientOptions ) do
