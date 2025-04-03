@@ -16,12 +16,12 @@ net.Receive( "lia.option.Load", function( length, pClient )
 	local clientOptions = net.ReadTable()
 	if not clientOptions then lia.error("NO TABLE") return end
 
-	lia.print("MOVED")
-	lia.option.client[ pClient ] = lia.option.client[ pClient ] or {}
+	local clientTable = lia.option.client[ pClient ]
+	clientTable = clientTable or {}
 
 	for k, v in pairs( clientOptions ) do
 		if lia.option.stored[ k ] then
-			lia.option.client[ pClient ][ k ] = v
+			clientTable[ k ] = v
 		end
 	end
 end )
