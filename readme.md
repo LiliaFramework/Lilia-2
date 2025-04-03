@@ -99,4 +99,10 @@ angle_zero =        Angle( 0, 0, 0 )
 - Character System ( Creating, Loading, Deleting )
 - Inventory System ( Weight Based )
 - User Interface ( Some sunny day )
-- Core Functions ( Modules System, Schema System, Attributes System )
+- Core Functions: ( Would be a good idea to double check them. )
+    * Module System - Done
+    * File Including - Done
+    * Localization - Done
+    * Config / Options - Done
+    Add smth, if we're missing it, I can't think properly rn.
+- CAMI Support (muah)
