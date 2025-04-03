@@ -16,6 +16,13 @@ function lia.option.Set( sName, sValue )
 		option:OnSet( sValue )
 	end
 
+	if not option.bNoNetworking then
+		net.Start( "lia.option.Set" )
+			net.WriteString( sName )
+			net.WriteType( sValue )
+		net.SendToServer()
+	end
+
 	file.Write( "lilia/options.txt", util.TableToJSON( lia.option.localOption, true ) )
 end
 

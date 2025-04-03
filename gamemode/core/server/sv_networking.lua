@@ -11,6 +11,23 @@ util.AddNetworkString( "lia.character.Load" )
 util.AddNetworkString( "lia.character.UpdateVar" )
 
 util.AddNetworkString( "lia.option.Set" )
+net.Receive( "lia.option.Set", function( iLength, pClient)
+	local sName = net.ReadString()
+	local sValue = net.ReadType()
+
+	if not sName or not sValue then return end
+
+	local option = lia.option.stored[ sName ]
+	if not option then return end
+
+	if option.OnSet then
+		option:OnSet( sValue )
+	end
+
+	lia.option.client[ pClient ] = lia.option.client[ pClient ] or {}
+	lia.option.client[ pClient ][ sName ] = sValue
+end )
+
 util.AddNetworkString( "lia.option.Load" )
 net.Receive( "lia.option.Load", function( length, pClient )
 	local clientOptions = net.ReadTable()
