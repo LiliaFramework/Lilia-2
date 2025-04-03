@@ -104,5 +104,6 @@ angle_zero =        Angle( 0, 0, 0 )
     * File Including - Done
     * Localization - Done
     * Config / Options - Done
+    * Schema System (DAHW DGAYD GAYU WDG)
     Add smth, if we're missing it, I can't think properly rn.
 - CAMI Support (muah)
