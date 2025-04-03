@@ -56,13 +56,6 @@ function lia.character.RegisterVariable( sName, tVarData )
 	end
 end
 
-lia.character.RegisterVariable("name", {
-	field = "name",
-	fieldType = "string",
-	default = "John Doe",
-	noNetwork = false,
-})
-
 function lia.character.New(data, id, client, steamID)
     if (data.name) then
         data.name = data.name:gsub("#", "#​")
@@ -86,3 +79,31 @@ function lia.character.New(data, id, client, steamID)
 
     return character
 end
+
+lia.character.RegisterVariable("name", {
+	field = "name",
+	fieldType = "string",
+	default = "John Doe",
+	noNetwork = false,
+})
+
+lia.character.RegisterVariable("description", {
+	field = "model",
+	fieldType = "string",
+	default = "",
+	noNetwork = false,
+})
+
+lia.character.RegisterVariable("model", {
+	field = "model",
+	fieldType = "string",
+	default = "",
+	noNetwork = false,
+})
+
+lia.character.RegisterVariable("faction", {
+	field = "model",
+	fieldType = "string",
+	default = "",
+	noNetwork = false,
+})
