@@ -8,7 +8,7 @@ function lia.character.RegisterVariable( sName, tVarData )
 	if not sName or not tVarData then return end
 
 	tVarData.field = tVarData.field or sName
-	tVarData.fieldType = tVarData.fieldType or "string"
+	tVarData.fieldType = tVarData.fieldType or lia.type.string
 	tVarData.default = tVarData.default or ""
 	tVarData.noNetwork = tVarData.noNetwork or false
 
