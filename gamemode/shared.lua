@@ -129,12 +129,12 @@ function lia.IncludeDir(sDir)
 end
 
 local function IncludeCore()
+	lia.IncludeDir("lilia/gamemode/core/meta")
 	lia.IncludeDir("lilia/gamemode/core/libraries/thirdparty")
-	lia.IncludeDir("lilia/gamemode/core/libraries")
 	lia.IncludeDir("lilia/gamemode/core/server")
+	lia.IncludeDir("lilia/gamemode/core/libraries")
 	lia.IncludeDir("lilia/gamemode/core/client")
 	lia.IncludeDir("lilia/gamemode/core")
-	lia.IncludeDir("lilia/gamemode/core/meta")
 
 	lia.module.Load()
 end

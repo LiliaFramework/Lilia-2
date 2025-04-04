@@ -17,20 +17,32 @@ function characterMeta:GetPlayer()
 end
 
 function characterMeta:Save()
-	if not self.id or self.id <= 0 then return end
+	if (self.isBot) then return end
 
-	local query = mysql:Update("lia_characters")
-		query:Update("name", self.vars.name)
-		query:Update("description", self.vars.description)
-		query:Update("model", self.vars.model)
-		query:Update("faction", self.vars.faction)
-		query:Update("data", util.TableToJSON(self.vars.data))
-		query:Update("money", self.vars.money)
-		query:Where("id", self.id)
-		query:Callback(function(result, status, lastID)
-			hook.Run("OnCharacterSaved", self, self.vars)
-		end)
-	query:Execute()
+	local shouldSave = hook.Run("CharacterPreSave", self)
+
+	if (shouldSave != false) then
+		-- Run a query to save the character to the database.
+		local query = mysql:Update("lia_characters")
+			-- update all character vars
+			for k, v in pairs(lia.character.vars) do
+				if (v.field && self.vars[k] != nil && !v.bSaveLoadInitialOnly) then
+					local value = self.vars[k]
+
+					query:Update(v.field, istable(value) && util.TableToJSON(value) or tostring(value))
+				end
+			end
+
+			query:Where("id", self:GetID())
+			query:Callback(function()
+				if (callback) then
+					callback()
+				end
+
+				hook.Run("CharacterPostSave", self)
+			end)
+		query:Execute()
+	end
 end
 
 lia.meta.character = characterMeta
