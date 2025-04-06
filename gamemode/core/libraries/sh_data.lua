@@ -11,12 +11,14 @@ function lia.data.Set(sKey, sValue, bIgnoreMap)
 
     file.CreateDir( path )
 
-    if not bIgnoreMap then
-        lia.data.stored[ game.GetMap() ] = table.Copy(lia.data.stored[ game.GetMap() ]) or {}
-        lia.data.stored[ game.GetMap() ][ sKey ] = sValue
+    local gameMap = game.GetMap()
 
-        if sValue == nil and table.Count( lia.data.stored[ game.GetMap() ] ) == 0 then
-            lia.data.stored[ game.GetMap() ] = nil
+    if not bIgnoreMap then
+        lia.data.stored[ gameMap ] = table.Copy( lia.data.stored[ gameMap ] ) or {}
+        lia.data.stored[ gameMap][ sKey ] = sValue
+
+        if sValue == nil and table.Count( lia.data.stored[ gameMap ] ) == 0 then
+            lia.data.stored[ gameMap ] = nil
         end
     else
         lia.data.stored[ sKey ] = sValue
@@ -28,7 +30,8 @@ function lia.data.Set(sKey, sValue, bIgnoreMap)
 end
 
 function lia.data.Get(sKey, default, bIgnoreMap)
-    local stored = bIgnoreMap and lia.data.stored[sKey] or lia.data.stored[game.GetMap()] and lia.data.stored[game.GetMap()][sKey]
+    local gameMap = game.GetMap()
+    local stored = bIgnoreMap and lia.data.stored[sKey] or lia.data.stored[ gameMap ] and lia.data.stored[ gameMap ][sKey]
     if stored != nil then
         return stored
     end
