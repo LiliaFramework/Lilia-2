@@ -7,7 +7,7 @@ function itemMeta:GetID()
 end
 
 function itemMeta:__tostring()
-	return "Inventory #" .. self.id
+	return "Item #" .. self.id
 end
 
 function itemMeta:GetName()
